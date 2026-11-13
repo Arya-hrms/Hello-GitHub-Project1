@@ -1,0 +1,469 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Employee Management | Green Valley HRMS</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --primary-dark: #0d3b23;
+    --primary: #174d36;
+    --accent: #1e6b48;
+    --bg-main: #edf5f0;
+    --text-main: #20372a;
+    --text-muted: #5c6e61;
+    --border-color: #d2e3d7;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', Arial, sans-serif;
+    background: var(--bg-main);
+    color: var(--text-main);
+}
+
+header {
+    padding: 15px 5%;
+    min-height: 85px;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--primary);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.logo h2 {
+    color: var(--primary);
+    font-size: 16px;
+}
+
+.logo p {
+    color: var(--text-muted);
+    font-size: 9px;
+    letter-spacing: 1px;
+}
+
+.back-btn {
+    background: var(--primary);
+    color: white;
+    padding: 10px 18px;
+    text-decoration: none;
+    border-radius: 7px;
+    font-size: 12px;
+}
+
+.container {
+    padding: 35px 5%;
+}
+
+.welcome {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 30px;
+    border-radius: 15px;
+    background: linear-gradient(120deg,#103b29,#246344);
+    color: white;
+    margin-bottom: 30px;
+}
+
+.welcome span {
+    color: #b9edc8;
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+.welcome h1 {
+    font-size: 27px;
+    margin: 8px 0;
+}
+
+.welcome p {
+    font-size: 13px;
+    color: #e0eee3;
+}
+
+.messages {
+    margin-bottom: 15px;
+}
+
+.message {
+    padding: 12px;
+    border-radius: 7px;
+    margin-bottom: 7px;
+    font-size: 13px;
+}
+
+.success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.error {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.summary {
+    background: white;
+    padding: 22px;
+    border-radius: 12px;
+    border-left: 5px solid var(--accent);
+    margin-bottom: 25px;
+    box-shadow: 0 8px 25px rgba(23,77,54,.08);
+}
+
+.summary p {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.summary h2 {
+    color: var(--primary);
+    font-size: 25px;
+}
+
+.table-container {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 8px 25px rgba(23,77,54,.08);
+}
+
+.table-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.table-heading h2 {
+    color: var(--primary);
+    font-size: 19px;
+}
+
+.search-box {
+    display: flex;
+    gap: 8px;
+}
+
+.search-box input {
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 7px;
+    font-family: inherit;
+    outline: none;
+}
+
+.search-box button {
+    padding: 10px 18px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    min-width: 1050px;
+    border-collapse: collapse;
+}
+
+th {
+    background: #eaf5ec;
+    color: var(--primary);
+    padding: 15px;
+    font-size: 12px;
+    text-align: left;
+}
+
+td {
+    padding: 14px;
+    font-size: 12px;
+    color: var(--text-muted);
+    border-bottom: 1px solid #e8eee9;
+}
+
+tr:hover {
+    background: #f7fbf8;
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+}
+
+.edit-btn, .delete-btn {
+    padding: 7px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 11px;
+    font-family: inherit;
+    border: none;
+    cursor: pointer;
+}
+
+.edit-btn {
+    background: #e2f2e7;
+    color: #174d36;
+}
+
+.delete-btn {
+    background: #fdeaea;
+    color: #c03939;
+}
+
+.empty {
+    text-align: center;
+    padding: 30px;
+}
+
+footer {
+    margin-top: 40px;
+    padding: 25px;
+    text-align: center;
+    background: white;
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+
+.admin-badge {
+    padding: 20px;
+    min-width: 160px;
+    background: white;
+    color: var(--primary);
+    border-radius: 12px;
+    text-align: center;
+}
+
+.admin-badge h2 {
+    font-size: 22px;
+}
+
+.admin-badge p {
+    color: #738076;
+    font-size: 11px;
+}
+
+@media(max-width:600px) {
+    header {
+        padding: 15px 4%;
+    }
+
+    .container {
+        padding: 25px 4%;
+    }
+
+    .table-container {
+        padding: 15px;
+    }
+
+    .welcome h1 {
+        font-size: 22px;
+    }
+
+    .search-box {
+        width: 100%;
+    }
+
+    .search-box input {
+        width: 100%;
+        min-width: 0;
+    }
+    .welcome {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .admin-badge {
+        width: 100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">
+        <div class="logo-icon">GV</div>
+        <div>
+            <h2>GREEN VALLEY</h2>
+            <p>INSTITUTE OF TECHNOLOGY</p>
+        </div>
+    </div>
+
+    <a href="{% url 'admindashboard' %}" class="back-btn">
+        ← Dashboard
+    </a>
+</header>
+
+<main class="container">
+
+    <section class="welcome">
+    <div>
+        <span>ADMINISTRATION</span>
+        <h1>Employee Management</h1>
+        <p>View, update and manage all employee records.</p>
+    </div>
+
+    <div class="admin-badge">
+         <h5>Total Registered Employees</h5>
+        <h2>{{ total_employees }}</h2>
+    </div>
+</section>
+   
+
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="message {{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    
+
+    <section class="table-container">
+
+        <div class="table-heading">
+            <h2>Employee Details</h2>
+
+            <form method="GET" class="search-box">
+                <input
+                    type="text"
+                    name="search"
+                    placeholder="Search employee..."
+                    value="{{ search }}"
+                >
+                <button type="submit">Search</button>
+            </form>
+        </div>
+
+        <div class="table-wrapper">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Employee ID</th>
+                        <th>Employee Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Department</th>
+                        <th>Designation</th>
+                        <th>Joining Date</th>
+                        <th>Basic Salary</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for employee in employees %}
+
+                    <tr>
+                        <td>{{ employee.employeeid }}</td>
+
+                        <td>{{ employee.user.first_name|title }}</td>
+
+                        <td>{{ employee.user.email }}</td>
+
+                        <td>{{ employee.phonenumber }}</td>
+
+                        <td>{{ employee.department }}</td>
+
+                        <td>{{ employee.designation }}</td>
+
+                        <td>{{ employee.joiningdate|date:"d M Y" }}</td>
+
+                        <td>₹ {{ employee.salary }}</td>
+
+                        <td>
+                            <div class="actions">
+
+                               
+
+                                <form method="POST"
+                                      action="{% url 'delete_employee' employee.id %}"
+                                      onsubmit="return confirm('Are you sure you want to delete this employee?');">
+
+                                    {% csrf_token %}
+
+                                    <button type="submit" class="delete-btn">
+                                        Delete
+                                    </button>
+
+                                </form>
+
+                            </div>
+                        </td>
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+                        <td colspan="9" class="empty">
+                            No employees found.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+            </table>
+
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    Green Valley Institute of Technology |
+    Human Resource Management System © 2026
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,500 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Attendance Management | Green Valley HRMS</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --primary-dark: #0d3b23;
+    --primary: #174d36;
+    --accent: #1e6b48;
+    --bg-main: #edf5f0;
+    --text-main: #20372a;
+    --text-muted: #5c6e61;
+    --border-color: #d2e3d7;
+    --shadow: 0 8px 25px rgba(23,77,54,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', Arial, sans-serif;
+    background: var(--bg-main);
+    color: var(--text-main);
+}
+
+header {
+    min-height: 80px;
+    padding: 15px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    width: 45px;
+    height: 45px;
+    background: var(--primary);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 19px;
+}
+
+.logo h2 {
+    font-size: 16px;
+    color: var(--primary);
+}
+
+.logo p {
+    font-size: 9px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+}
+
+.back-btn {
+    background: var(--primary);
+    color: white;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 7px;
+    font-size: 12px;
+}
+
+.container {
+    padding: 35px 6%;
+}
+
+.welcome {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 30px;
+    border-radius: 15px;
+    background: linear-gradient(120deg, #103b29, #246344);
+    color: white;
+    margin-bottom: 30px;
+    box-shadow: 0 15px 35px rgba(13,56,34,0.2);
+}
+
+.welcome span {
+    color: #b9edc8;
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+.welcome h1 {
+    font-size: 28px;
+    margin: 8px 0;
+}
+
+.welcome p {
+    font-size: 13px;
+    color: #e0eee3;
+}
+
+.admin-badge {
+    display: block;
+    min-width: 180px;
+    padding: 20px;
+    background: white;
+    color: #174d36;
+    border-radius: 12px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.admin-badge h2 {
+    font-size: 25px;
+}
+
+.admin-badge p {
+    color: #738076;
+    font-size: 11px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+    margin-bottom: 30px;
+}
+
+.card h3 {
+    font-size: 17px;
+    color: var(--primary);
+    margin-bottom: 18px;
+}
+
+.section-heading {
+    margin: 30px 0 18px;
+}
+
+.section-heading span {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.section-heading h2 {
+    font-size: 22px;
+    color: var(--primary);
+    margin-top: 5px;
+}
+
+.search-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.search-form input {
+    padding: 11px;
+    border: 1px solid var(--border-color);
+    border-radius: 7px;
+    font-family: inherit;
+    max-width: 100%;
+}
+
+.search-form button {
+    padding: 10px 18px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.reset-btn {
+    padding: 10px 15px;
+    background: #68766d;
+    color: white;
+    text-decoration: none;
+    border-radius: 7px;
+    font-size: 12px;
+}
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    text-align: left;
+    min-width: 750px;
+}
+
+th, td {
+    padding: 14px 13px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+th {
+    background: #f5faf6;
+    color: var(--primary);
+    font-weight: 600;
+}
+
+tr:hover {
+    background: #fafdfb;
+}
+
+.status {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.status.Present {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status.Absent {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.status.Late {
+    background: #fff0c2;
+    color: #856404;
+}
+
+.status.Leave {
+    background: #e3e5ff;
+    color: #4447a3;
+}
+
+.empty {
+    text-align: center;
+    padding: 25px;
+    color: var(--text-muted);
+}
+
+.messages {
+    padding: 15px 5%;
+}
+
+.message {
+    padding: 12px 15px;
+    border-radius: 7px;
+    font-size: 12px;
+    margin-bottom: 7px;
+}
+
+.message.success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.message.error {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.message.warning {
+    background: #fff0c2;
+    color: #856404;
+}
+
+.message.info {
+    background: #cce5ff;
+    color: #004085;
+}
+
+footer {
+    padding: 25px;
+    margin-top: 35px;
+    text-align: center;
+    background: white;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-muted);
+    font-size: 11px;
+}
+
+@media(max-width:700px) {
+    .container {
+        padding: 25px 4%;
+    }
+
+    .welcome {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .welcome h1 {
+        font-size: 23px;
+    }
+
+    .admin-badge {
+        width: 100%;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    header {
+        padding: 12px 4%;
+    }
+
+    .logo h2 {
+        font-size: 13px;
+    }
+
+    .back-btn {
+        font-size: 10px;
+        padding: 9px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">
+        <div class="logo-icon">GV</div>
+        <div>
+            <h2>GREEN VALLEY</h2>
+            <p>INSTITUTE OF TECHNOLOGY</p>
+        </div>
+    </div>
+
+    <a href="{% url 'admindashboard' %}" class="back-btn">
+        ← Dashboard
+    </a>
+</header>
+
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <div class="message {{ message.tags }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<main class="container">
+
+    <section class="welcome">
+
+        <div>
+            <span>ADMINISTRATION</span>
+            <h1>Attendance Management</h1>
+            <p>View and monitor all employee attendance records.</p>
+        </div>
+
+        <div class="admin-badge">
+            <h5>Total Registered Employees</h5>
+            <h2>{{ total_employees }}</h2>
+        </div>
+
+    </section>
+
+    <div class="section-heading">
+        <span>EMPLOYEE ATTENDANCE</span>
+        <h2>Attendance Details</h2>
+    </div>
+
+    <section class="card">
+
+        <h3>All Employee Attendance Records</h3>
+
+        <form method="GET" class="search-form">
+
+            <input
+                type="text"
+                name="search"
+                placeholder="Search employee..."
+                value="{{ search }}"
+            >
+
+            <input
+                type="date"
+                name="date"
+                value="{{ selected_date }}"
+            >
+
+            <button type="submit">Search</button>
+
+            <a href="{% url 'manage_attendance' %}" class="reset-btn">
+                Reset
+            </a>
+
+        </form>
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Employee ID</th>
+                        <th>Employee Name</th>
+                        <th>Date</th>
+                        <th>Check In</th>
+                        <th>Check Out</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for record in attendance_records %}
+
+                    <tr>
+
+                        <td>{{ record.employee.employeeid }}</td>
+
+                        <td>
+                            {{ record.employee.user.first_name|title }}
+                        </td>
+
+                        <td>{{ record.date|date:"d M Y" }}</td>
+
+                        <td>
+                            {% if record.check_in %}
+                                {{ record.check_in|time:"h:i A" }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {% if record.check_out %}
+                                {{ record.check_out|time:"h:i A" }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            <span class="status {{ record.status }}">
+                                {{ record.status }}
+                            </span>
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+                        <td colspan="6" class="empty">
+                            No attendance records found.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    Green Valley Institute of Technology |
+    Human Resource Management System © 2026
+</footer>
+
+</body>
+</html>

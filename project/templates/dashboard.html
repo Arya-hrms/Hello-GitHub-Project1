@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Employee Dashboard | Green Valley HRMS</title>
+
+<!-- Google Font: Poppins -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --primary-dark: #0d3b23;
+    --primary: #174d36;
+    --accent: #1e6b48;
+    --bg-main: #edf5f0;
+    --card-bg: #ffffff;
+    --text-main: #20372a;
+    --text-muted: #5c6e61;
+    --border-color: #d2e3d7;
+    --shadow: 0 8px 25px rgba(23, 77, 54, 0.08);
+    --shadow-hover: 0 14px 30px rgba(23, 77, 54, 0.15);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', Arial, sans-serif;
+    background: var(--bg-main);
+    color: var(--text-main);
+}
+
+/* Django Messages */
+.messages {
+    padding: 15px 5%;
+    background: #e1f5fe;
+    border-bottom: 1px solid #b3e5fc;
+}
+.message {
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+.message.success { background: #d4edda; color: #155724; }
+.message.error { background: #f8d7da; color: #721c24; }
+.message.info { background: #cce5ff; color: #004085; }
+
+/* Header */
+header {
+    min-height: 85px;
+    padding: 15px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--primary);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.logo h2 {
+    color: var(--primary);
+    font-size: 16px;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.logo p {
+    font-size: 9px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    font-weight: 500;
+}
+
+.logout {
+    padding: 10px 20px;
+    background: var(--primary);
+    color: white;
+    text-decoration: none;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+.logout:hover {
+    background: var(--primary-dark);
+}
+
+/* Main Container */
+.container {
+    padding: 35px 6%;
+}
+
+/* Welcome */
+.welcome {
+    padding: 35px;
+    border-radius: 15px;
+    background: linear-gradient(120deg, #103b29, #246344);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 15px 35px rgba(13, 56, 34, 0.25);
+}
+
+.welcome span {
+    color: #b9edc8;
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+.welcome h1 {
+    font-size: 30px;
+    margin: 10px 0;
+    font-weight: 600;
+}
+
+.welcome p {
+    color: #e0eee3;
+    font-size: 13px;
+}
+
+.employee-badge {
+    padding: 20px;
+    min-width: 160px;
+    background: white;
+    color: var(--primary);
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.employee-badge h2 {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.employee-badge p {
+    color: #738076;
+    font-size: 11px;
+    margin-top: 5px;
+    font-weight: 500;
+}
+
+/* Section Heading */
+.section-heading {
+    margin: 35px 0 20px;
+}
+
+.section-heading span {
+    color: var(--accent);
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+.section-heading h2 {
+    margin-top: 5px;
+    color: var(--primary);
+    font-size: 24px;
+    font-weight: 600;
+}
+
+/* Statistics */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.stat-card {
+    padding: 24px;
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    transition: 0.3s;
+    box-shadow: var(--shadow);
+    border-left: 5px solid var(--accent);
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+}
+
+.stat-icon {
+    width: 45px;
+    height: 45px;
+    background: #e2f2e7;
+    color: var(--accent);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.stat-card p {
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.stat-card h2 {
+    color: var(--primary);
+    font-size: 25px;
+    margin-top: 5px;
+    font-weight: 600;
+}
+
+/* Dashboard Grid - Removing white space with unique soft colors */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.dashboard-card {
+    padding: 24px;
+    border-radius: 12px;
+    transition: 0.3s;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid transparent;
+}
+
+/* Different soft background colors for each card to eliminate plain white space */
+.dashboard-card:nth-child(1) {
+    background: #eaf5ec;
+    border-color: #d1e7d5;
+}
+.dashboard-card:nth-child(2) {
+    background: #eef4f8;
+    border-color: #d3e2ed;
+}
+.dashboard-card:nth-child(3) {
+    background: #fdf6ec;
+    border-color: #f3dfc5;
+}
+.dashboard-card:nth-child(4) {
+    background: #f7eef8;
+    border-color: #ebd5ed;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+    filter: brightness(98%);
+}
+
+.dashboard-card .card-icon {
+    font-size: 26px;
+    margin-bottom: 15px;
+    background: rgba(255, 255, 255, 0.7);
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+.dashboard-card h3 {
+    color: var(--primary);
+    font-size: 16px;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.dashboard-card p {
+    color: var(--text-muted);
+    font-size: 12px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.dashboard-card a {
+    display: inline-block;
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.dashboard-card a:hover {
+    text-decoration: underline;
+}
+
+/* Profile */
+.profile {
+    padding: 25px;
+    margin-top: 35px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}
+
+.profile h3 {
+    color: var(--primary);
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.profile-details {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.detail {
+    background: #f4f9f5;
+    padding: 15px 18px;
+    border-radius: 10px;
+    border: 1px solid #dcebe0;
+}
+
+.detail p {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 5px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.detail h4 {
+    color: #304b38;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Footer */
+footer {
+    padding: 25px;
+    margin-top: 40px;
+    text-align: center;
+    background: var(--card-bg);
+    border-top: 1px solid var(--border-color);
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+/* Responsive */
+@media(max-width: 900px) {
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .dashboard-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 600px) {
+    header {
+        padding: 15px 4%;
+    }
+
+    .logo h2 {
+        font-size: 13px;
+    }
+
+    .container {
+        padding: 25px 4%;
+    }
+
+    .welcome {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 25px;
+    }
+
+    .welcome h1 {
+        font-size: 22px;
+    }
+
+    .employee-badge {
+        width: 100%;
+    }
+
+    .stats,
+    .dashboard-grid,
+    .profile-details {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+
+<header>
+    <div class="logo">
+        <div class="logo-icon">GV</div>
+        <div>
+            <h2>GREEN VALLEY</h2>
+            <p>INSTITUTE OF TECHNOLOGY</p>
+        </div>
+    </div>
+
+    <a href="{% url 'logout_employee' %}" class="logout">Logout →</a>
+</header>
+
+<main class="container">
+<!-- Django Messages -->
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <div class="message {% if message.tags == 'error' %}error{% elif message.tags == 'success' %}success{% else %}info{% endif %}">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+    <!-- Welcome -->
+    <section class="welcome">
+        <div>
+            <span>EMPLOYEE DASHBOARD</span>
+            <h1>Welcome, {{ employee.user.first_name|title }}!</h1>
+            <p>Welcome to your Green Valley HRMS employee portal.</p>
+        </div>
+
+        <div class="employee-badge">
+            <h2>{{ employee.employeeid }}</h2>
+            <p>Employee ID</p>
+        </div>
+    </section>
+
+    <!-- Statistics -->
+    <div class="section-heading">
+        <span>QUICK OVERVIEW</span>
+        <h2>Your HR Information</h2>
+    </div>
+
+    <section class="stats">
+
+        <div class="stat-card">
+            <div class="stat-icon">◷</div>
+            <p>Working Days</p>
+            <h2>{{ working_days|default:"0" }}</h2>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">▦</div>
+            <p>Leave Balance</p>
+            <h2>{{ leave_balance|default:"0" }}</h2>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">₹</div>
+            <p>Monthly Salary</p>
+            <h2>₹{{ employee.salary|default:"0" }}</h2>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">✓</div>
+            <p>Employee Status</p>
+            <h2 style="font-size:20px;">Active</h2>
+        </div>
+
+    </section>
+
+    <!-- Services -->
+    <div class="section-heading">
+        <span>EMPLOYEE SERVICES</span>
+        <h2>Manage Your Activities</h2>
+    </div>
+
+    <section class="dashboard-grid">
+
+        <div class="dashboard-card">
+            <div class="card-icon">👤</div>
+            <div>
+                <h3>Edit Profile</h3>
+                <p>View your personal information, department and educational qualifications.</p>
+            </div>
+            <a href="{% url 'edit_profile' %}">Edit Profile →</a>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="card-icon">◷</div>
+            <div>
+                <h3>Attendance</h3>
+                <p>Check your daily attendance and monthly working details.</p>
+            </div>
+            <a href="{% url 'attendance' %}">View Attendance →</a>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="card-icon">📅</div>
+            <div>
+                <h3>Leave Management</h3>
+                <p>Apply for leave and check your leave application status.</p>
+            </div>
+            <a href="{% url 'apply_leave' %}">Manage Leave →</a>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="card-icon">₹</div>
+            <div>
+                <h3>Payroll</h3>
+                <p>View your monthly salary information and payslips.</p>
+            </div>
+            <a href="{% url 'salary' %}">View Payroll →</a>
+        </div>
+
+    </section>
+
+    <!-- Employee Details -->
+    <section class="profile">
+        <h3>Employee Information</h3>
+
+        <div class="profile-details">
+
+            <div class="detail">
+                <p>Employee Name</p>
+                <h4>{{ employee.user.first_name|title }}</h4>
+            </div>
+
+            <div class="detail">
+                <p>Email Address</p>
+                <h4>{{ employee.user.email }}</h4>
+            </div>
+            
+            <div class="detail">
+                <p>Phone Number</p>
+                <h4>{{ employee.phonenumber }}</h4>
+            </div>
+
+            <div class="detail">
+                <p>Department</p>
+                <h4>{{ employee.department }}</h4>
+            </div>
+
+            <div class="detail">
+                <p>Joining Date</p>
+                <h4>{{ employee.joiningdate }}</h4>
+            </div>
+
+            <div class="detail">
+                <p>Designation</p>
+                <h4>{{ employee.designation }}</h4>
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    Green Valley Institute of Technology |
+    Human Resource Management System © 2026
+</footer>
+
+</body>
+</html>

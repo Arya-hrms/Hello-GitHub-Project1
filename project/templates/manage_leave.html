@@ -1,0 +1,597 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Leave Management | Green Valley HRMS</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --primary-dark: #0d3b23;
+    --primary: #174d36;
+    --accent: #1e6b48;
+    --bg-main: #edf5f0;
+    --text-main: #20372a;
+    --text-muted: #5c6e61;
+    --border-color: #d2e3d7;
+    --shadow: 0 8px 25px rgba(23,77,54,0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', Arial, sans-serif;
+    background: var(--bg-main);
+    color: var(--text-main);
+}
+
+header {
+    min-height: 80px;
+    padding: 15px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    width: 45px;
+    height: 45px;
+    background: var(--primary);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 19px;
+}
+
+.logo h2 {
+    font-size: 16px;
+    color: var(--primary);
+}
+
+.logo p {
+    font-size: 9px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+}
+
+.back-btn {
+    background: var(--primary);
+    color: white;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 7px;
+    font-size: 12px;
+}
+
+.container {
+    padding: 35px 6%;
+}
+
+.welcome {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 30px;
+    border-radius: 15px;
+    background: linear-gradient(120deg, #103b29, #246344);
+    color: white;
+    margin-bottom: 30px;
+    box-shadow: 0 15px 35px rgba(13,56,34,0.2);
+}
+
+.welcome span {
+    color: #b9edc8;
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+.welcome h1 {
+    font-size: 28px;
+    margin: 8px 0;
+}
+
+.welcome p {
+    font-size: 13px;
+    color: #e0eee3;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 35px;
+}
+
+.stat-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+}
+
+.stat-card p {
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+.stat-card h2 {
+    font-size: 27px;
+    color: var(--primary);
+    margin-top: 8px;
+}
+
+.section-heading {
+    margin: 30px 0 18px;
+}
+
+.section-heading span {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.section-heading h2 {
+    font-size: 22px;
+    color: var(--primary);
+    margin-top: 5px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+    margin-bottom: 30px;
+}
+
+.card h3 {
+    font-size: 17px;
+    color: var(--primary);
+    margin-bottom: 18px;
+}
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    text-align: left;
+    min-width: 650px;
+}
+
+th, td {
+    padding: 14px 13px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+th {
+    background: #f5faf6;
+    color: var(--primary);
+    font-weight: 600;
+}
+
+tr:hover {
+    background: #fafdfb;
+}
+
+.balance {
+    font-weight: 600;
+    color: var(--accent);
+}
+
+.status {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.status.Pending {
+    background: #fff0c2;
+    color: #856404;
+}
+
+.status.Approved {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status.Rejected {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.action-form {
+    display: flex;
+    gap: 7px;
+}
+
+.action-btn {
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.approve-btn {
+    background: #d4edda;
+    color: #155724;
+}
+
+.reject-btn {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.approve-btn:hover {
+    background: #155724;
+    color: white;
+}
+
+.reject-btn:hover {
+    background: #721c24;
+    color: white;
+}
+
+.empty {
+    text-align: center;
+    padding: 25px;
+    color: var(--text-muted);
+}
+
+.messages {
+    padding: 15px 5%;
+}
+
+.message {
+    padding: 12px 15px;
+    border-radius: 7px;
+    font-size: 12px;
+    margin-bottom: 7px;
+}
+
+.message.success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.message.error {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.message.warning {
+    background: #fff0c2;
+    color: #856404;
+}
+
+.message.info {
+    background: #cce5ff;
+    color: #004085;
+}
+
+footer {
+    padding: 25px;
+    margin-top: 35px;
+    text-align: center;
+    background: white;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-muted);
+    font-size: 11px;
+}
+
+@media(max-width: 700px) {
+    .container {
+        padding: 25px 4%;
+    }
+
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .welcome h1 {
+        font-size: 23px;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    header {
+        padding: 12px 4%;
+    }
+
+    .logo h2 {
+        font-size: 13px;
+    }
+
+    .back-btn {
+        font-size: 10px;
+        padding: 9px;
+    }
+}
+.admin-badge {
+    display: block;
+    min-width: 180px;
+    padding: 20px;
+    background: white;
+    color: #174d36;
+    border-radius: 12px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.admin-badge h2 {
+    font-size: 25px;
+}
+
+.admin-badge p {
+    color: #738076;
+    font-size: 11px;
+}
+@media(max-width:600px) {
+.admin-badge {
+        width: 100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">
+        <div class="logo-icon">GV</div>
+        <div>
+            <h2>GREEN VALLEY</h2>
+            <p>INSTITUTE OF TECHNOLOGY</p>
+        </div>
+    </div>
+
+    <a href="{% url 'admindashboard' %}" class="back-btn">
+        ← Dashboard
+    </a>
+</header>
+
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <div class="message {{ message.tags }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<main class="container">
+
+    <section class="welcome">
+
+    <div>
+        <span>ADMINISTRATION</span>
+        <h1>Leave Management</h1>
+        <p>Manage employee leave applications and monthly leave balance.</p>
+    </div>
+
+    <div class="admin-badge">
+        <h5>Total Registered Employees</h5>
+        <h2>{{ total_employees }}</h2>
+    </div>
+
+</section>
+
+ 
+    
+
+    <!-- Monthly Leave Balance -->
+
+    <div class="section-heading">
+        <span>MONTHLY EMPLOYEE LEAVE BALANCE</span>
+        <h2>{{ current_month }}</h2>
+    </div>
+
+    <section class="card">
+
+        <h3>Monthly Employee Leave Balance</h3>
+
+        <div class="table-wrapper">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Employee ID</th>
+                        <th>Employee Name</th>
+                        <th>Leave Type</th>
+                        <th>Allowed</th>
+                        <th>Approved</th>
+                        <th>Balance</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for item in monthly_balances %}
+
+                    <tr>
+                        <td>{{ item.employeeid }}</td>
+                        <td>{{ item.name|title }}</td>
+                        <td><strong>{{ item.leave_type }}</strong></td>
+                        <td>{{ item.allowed }}</td>
+                        <td>{{ item.used }}</td>
+                        <td class="balance">{{ item.remaining }}</td>
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+                        <td colspan="6" class="empty">
+                            No employees found.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+            </table>
+
+        </div>
+
+    </section>
+
+    <!-- Employee Leave Requests -->
+
+    <div class="section-heading">
+        <span>EMPLOYEE APPLICATIONS</span>
+        <h2>Leave Requests</h2>
+    </div>
+
+    <section class="card">
+
+        <h3>All Employee Leave Applications</h3>
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Employee ID</th>
+                        <th>Employee Name</th>
+                        <th>Leave Type</th>
+                        <th>From Date</th>
+                        <th>To Date</th>
+                        <th>Reason</th>
+                        <th>Applied On</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for leave in leave_records %}
+
+                    <tr>
+
+                        <td>{{ leave.employee.employeeid }}</td>
+
+                        <td>
+                            {{ leave.employee.user.first_name|title }}
+                        </td>
+
+                        <td>{{ leave.leave_type }}</td>
+
+                        <td>{{ leave.from_date|date:"d M Y" }}</td>
+
+                        <td>{{ leave.to_date|date:"d M Y" }}</td>
+
+                        <td>{{ leave.reason|truncatechars:30 }}</td>
+
+                        <td>{{ leave.applied_on|date:"d M Y" }}</td>
+
+                        <td>
+                            <span class="status {{ leave.status }}">
+                                {{ leave.status }}
+                            </span>
+                        </td>
+
+                        <td>
+
+                            {% if leave.status == 'Pending' %}
+
+                            <form method="POST"
+                                  action="{% url 'admin_leave_action' leave.id %}"
+                                  class="action-form">
+
+                                {% csrf_token %}
+
+                                <button
+                                    type="submit"
+                                    name="action"
+                                    value="approve"
+                                    class="action-btn approve-btn">
+                                    ✓ Approve
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    name="action"
+                                    value="reject"
+                                    class="action-btn reject-btn"
+                                    onclick="return confirm('Are you sure you want to reject this leave?');">
+                                    ✕ Reject
+                                </button>
+
+                            </form>
+
+                            {% else %}
+
+                            <span style="color:#738076;font-size:11px;">
+                                Completed
+                            </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+                        <td colspan="9" class="empty">
+                            No leave applications found.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    Green Valley Institute of Technology |
+    Human Resource Management System © 2026
+</footer>
+
+</body>
+</html>

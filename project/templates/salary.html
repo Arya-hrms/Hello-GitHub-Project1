@@ -1,0 +1,513 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>My Salary | Green Valley HRMS</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --primary-dark: #0d3b23;
+    --primary: #174d36;
+    --accent: #1e6b48;
+    --bg-main: #edf5f0;
+    --text-main: #20372a;
+    --text-muted: #5c6e61;
+    --border-color: #d2e3d7;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', Arial, sans-serif;
+    background: var(--bg-main);
+    color: var(--text-main);
+}
+
+header {
+    padding: 15px 5%;
+    min-height: 85px;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--primary);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.logo h2 {
+    color: var(--primary);
+    font-size: 16px;
+}
+
+.logo p {
+    color: var(--text-muted);
+    font-size: 9px;
+    letter-spacing: 1px;
+}
+
+.back-btn {
+    background: var(--primary);
+    color: white;
+    padding: 10px 18px;
+    text-decoration: none;
+    border-radius: 7px;
+    font-size: 12px;
+}
+
+.container {
+    padding: 35px 6%;
+}
+
+/* Messages */
+
+.messages {
+    margin-bottom: 20px;
+}
+
+.message {
+    padding: 12px 15px;
+    border-radius: 7px;
+    font-size: 13px;
+    margin-bottom: 7px;
+}
+
+.message.success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.message.error {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.message.info {
+    background: #cce5ff;
+    color: #004085;
+}
+
+/* Welcome */
+
+.welcome {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 35px;
+    border-radius: 15px;
+    background: linear-gradient(120deg,#103b29,#246344);
+    color: white;
+    margin-bottom: 30px;
+    box-shadow: 0 15px 35px rgba(13,56,34,.2);
+}
+
+.welcome span {
+    color: #b9edc8;
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+.welcome h1 {
+    font-size: 30px;
+    margin: 8px 0;
+}
+
+.welcome p {
+    font-size: 13px;
+    color: #e0eee3;
+}
+
+.employee-badge {
+    padding: 20px;
+    min-width: 160px;
+    background: white;
+    color: var(--primary);
+    border-radius: 12px;
+    text-align: center;
+}
+
+.employee-badge h2 {
+    font-size: 23px;
+}
+
+.employee-badge p {
+    color: #738076;
+    font-size: 11px;
+}
+
+/* Heading */
+
+.section-heading {
+    margin: 35px 0 20px;
+}
+
+.section-heading span {
+    color: var(--accent);
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+.section-heading h2 {
+    margin-top: 5px;
+    color: var(--primary);
+    font-size: 24px;
+}
+
+/* Salary Cards */
+
+.salary-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.salary-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    border-left: 5px solid var(--accent);
+    box-shadow: 0 8px 25px rgba(23,77,54,.08);
+}
+
+.salary-card p {
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+
+.salary-card h2 {
+    color: var(--primary);
+    font-size: 25px;
+    word-break: break-word;
+}
+
+.salary-card span {
+    font-size: 11px;
+    color: #849188;
+}
+
+/* Table */
+
+.table-container {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 8px 25px rgba(23,77,54,.08);
+}
+
+.table-heading {
+    margin-bottom: 20px;
+}
+
+.table-heading h2 {
+    color: var(--primary);
+    font-size: 19px;
+}
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    min-width: 950px;
+    border-collapse: collapse;
+}
+
+th {
+    background: #eaf5ec;
+    color: var(--primary);
+    padding: 15px;
+    font-size: 12px;
+    text-align: left;
+}
+
+td {
+    padding: 15px;
+    font-size: 12px;
+    color: var(--text-muted);
+    border-bottom: 1px solid #e8eee9;
+}
+
+tr:hover {
+    background: #f7fbf8;
+}
+
+.salary {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.total {
+    color: #1e8b4d;
+    font-weight: 700;
+}
+
+.empty {
+    text-align: center;
+    padding: 30px;
+}
+
+footer {
+    margin-top: 40px;
+    padding: 25px;
+    text-align: center;
+    background: white;
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+/* Responsive */
+
+@media(max-width:900px) {
+    .salary-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width:600px) {
+    header {
+        padding: 15px 4%;
+    }
+
+    .container {
+        padding: 25px 4%;
+    }
+
+    .welcome {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 25px;
+    }
+
+    .welcome h1 {
+        font-size: 23px;
+    }
+
+    .employee-badge {
+        width: 100%;
+    }
+
+    .salary-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .table-container {
+        padding: 15px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Django Messages -->
+
+{% if messages %}
+<div class="messages" style="padding:15px 5%;">
+    {% for message in messages %}
+    <div class="message
+        {% if message.tags == 'error' %}error
+        {% elif message.tags == 'success' %}success
+        {% else %}info{% endif %}">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- Header -->
+
+<header>
+
+    <div class="logo">
+        <div class="logo-icon">GV</div>
+
+        <div>
+            <h2>GREEN VALLEY</h2>
+            <p>INSTITUTE OF TECHNOLOGY</p>
+        </div>
+    </div>
+
+    <a href="{% url 'dashboard' %}" class="back-btn">
+        ← Dashboard
+    </a>
+
+</header>
+
+<main class="container">
+
+    <!-- Welcome -->
+
+    <section class="welcome">
+
+        <div>
+            <span>EMPLOYEE PAYROLL</span>
+
+            <h1>My Salary</h1>
+
+            <p>
+                Welcome {{ employee.user.first_name|title }},
+                view your salary and payroll details.
+            </p>
+        </div>
+
+        <div class="employee-badge">
+            <h2>{{ employee.employeeid }}</h2>
+            <p>Employee ID</p>
+        </div>
+
+    </section>
+
+    <!-- Salary Overview -->
+
+    <div class="section-heading">
+
+        <span>SALARY OVERVIEW</span>
+
+        <h2>Your Increment Salary</h2>
+
+    </div>
+
+    
+<section class="salary-cards">
+    
+
+    <div class="salary-card">
+        <p>Common Yearly Increment</p>
+        <h2>₹ {{ common_increment|floatformat:2 }}</h2>
+        <span>Total Common Increment</span>
+    </div>
+
+    <div class="salary-card">
+        <p>Special Individual Increment</p>
+        <h2>₹ {{ personal_increment|floatformat:2 }}</h2>
+        <span>Total Special Increment</span>
+    </div>
+
+    <div class="salary-card">
+        <p>Festival Bonus</p>
+        <h2>₹ {{ festival_bonus|floatformat:2 }}</h2>
+        <span>Current Month Bonus</span>
+    </div>
+
+    
+
+</section>
+
+
+    <!-- Payroll Table -->
+
+    <div class="section-heading">
+
+        <span>PAYROLL RECORDS</span>
+
+        <h2>My Payroll Details</h2>
+
+    </div>
+
+    <section class="table-container">
+
+        <div class="table-heading">
+            <h2>Salary Details</h2>
+        </div>
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Employee ID</th>
+                        <th>Employee Name</th>
+                        <th>Basic Salary</th>
+                        <th>Common Increment</th>
+                        <th>Special Increment</th>
+                        <th>Festival Bonus</th>
+                        <th>Total Monthly Salary</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+
+                        <td>{{ employee.employeeid }}</td>
+
+                        <td>
+                            {{ employee.user.first_name|title }}
+                        </td>
+
+                        
+
+                        <td class="salary">
+    ₹ {{ basic_salary|floatformat:2 }}
+</td>
+
+<td class="salary">
+    ₹ {{ common_increment|floatformat:2 }}
+</td>
+
+<td class="salary">
+    ₹ {{ personal_increment|floatformat:2 }}
+</td>
+
+<td class="salary">
+    ₹ {{ festival_bonus|floatformat:2 }}
+</td>
+
+<td class="total">
+    ₹ {{ monthly_payroll|floatformat:2 }}
+</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    Green Valley Institute of Technology |
+    Human Resource Management System © 2026
+</footer>
+
+</body>
+</html>
